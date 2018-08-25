@@ -1,6 +1,17 @@
-import HomeView from './components/HomeView'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-// Sync route definition
-export default {
-  component : HomeView
+
+class Home extends Component {
+  render() {
+    console.log("here");
+    return (
+      <div>
+        <h4>Welcome!</h4>
+      </div>
+    )
+  }
 }
+
+export default withRouter((Home)
+);
