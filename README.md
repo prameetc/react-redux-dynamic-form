@@ -1,4 +1,4 @@
-# React Redux Starter Kit
+# React Redux Dynamic Form
 
 ## Requirements
 * node `^5.0.0`
