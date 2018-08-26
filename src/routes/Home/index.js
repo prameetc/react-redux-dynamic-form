@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
+import { connect } from 'react-redux';
+// import { getFormValues } from 'redux-form/immutable'
 import Select from 'react-select';
 
 // This is a sample data set. 
@@ -36,45 +38,59 @@ const email = value =>
     'Invalid email address' : undefined
 
 // Component to render the field
- const renderField = ({ input, field, meta: { touched, error, warning } }) => {
-   const { type, placeholder, value, name } = field
-   if (type === 'text' || type === 'email' || type === 'number' || type === 'checkbox') {
-        return (
-          <div>
-            <input {...input} className="form-control" placeholder={placeholder} type={type} />
-            {touched && ((error && <span style={{ color: 'red' }}>{error}</span>) || (warning && <span>{warning}</span>))}  
-          </div>
-        )
-      } else if (type === 'select') {
-        const { options } = field
-        return (
-          <div style={{ display: 'block', width: '40%' }} className="text-center">
-            <Select options={options} isSerchable={options.length > 2 ? true : false} />
-          </div>
-        )
-      } 
-      else if (type === 'radio') {
-        return (
-          <div>
-            <label className="p-2">{value}</label>
-            <input {...input} type={type} value={value} />
-          </div>
-        )
-      }
-      else {
-        return <div>Type not supported.</div>
-      }
- }
     
+const renderField = ({ input, field, meta: { touched, error, warning } }) => {
+  const { type, placeholder, value, name, conditional } = field
+  if (type === 'text' || type === 'email' || type === 'number') {
+    return (
+      <div>
+        <input {...input} className="form-control" placeholder={placeholder} type={type} />
+        {touched && ((error && <span style={{ color: 'red' }}>{error}</span>) || (warning && <span>{warning}</span>))}
+      </div>
+    )
+  }
+  else if (type === 'checkbox') {
+    return (
+      <input {...input} className="form-control" value={value} placeholder={placeholder} type={type} />
+    )
+  }
+  else if (type === 'select') {
+    const { options } = field
+    const handleBlur = e => e.preventDefault();
+    return (
+      <div style={{ display: 'block', width: '40%' }} className="text-center">
+        <Select {...input} options={options} onBlur={this.handleblur} onChange={input.onChange} isSerchable={options.length > 2 ? true : false} />
+      </div>
+    )
+  }
+  else if (type === 'radio') {
+    return (
+      <span>
+        <label className="p-2">{value}</label>
+        <input {...input} type={type} value={value} />
+      </span>
+    )
+  }
+  else {
+    return <div>Type not supported.</div>
+  }
+}
+
 function submit(values) {
   console.log('here', values);
 }
 
 
 class Home extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      isChecked: false
+    };
+  }
   render() { 
-    const { handleSubmit, pristine, reset, submitting } = this.props
+    const { handleSubmit, pristine, reset, submitting } = this.props;
+    
     return (
       <div className="container">
         <div className="form-group w-50">
@@ -88,7 +104,7 @@ class Home extends Component {
                   name={field.name}
                   component={renderField}
                   field={field}
-                  validate={[required, email]}
+                 // validate={[required, email]}
                 />
               </div>
             </div>
@@ -101,7 +117,16 @@ class Home extends Component {
   }
 }
 
-export default reduxForm({
+const HomeScreen = reduxForm({
   form: "sampleform", 
   destroyOnUnmount: false
 })(Home);
+
+const mapStateToProps = state => {
+  const formState = getFormValues('sampleform')(state)
+  return {
+    formState: state.form.sampleform,
+  }
+}
+
+export default connect(mapStateToProps)(HomeScreen);
