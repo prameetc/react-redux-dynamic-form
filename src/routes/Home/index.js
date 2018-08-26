@@ -44,34 +44,37 @@ const validate = values => {
         const { options } = field
         return (
           <Select options={options} isSerchable={options.length > 2 ? true : false} />
-          // <select name={field.name} onChange={input.onChange}>
-          //   {options.map((option, index) => {
-          //     return <option key={index} value={option.value}>{option.label}</option>
-          //   })}
-          // </select>
         )
       } else {
         return <div>Type not supported.</div>
       }
-    }
+ }
+    
+function submit(values) {
+  console.log('here', values);
+}
+
 
 class Home extends Component {
-  submit(values) {
-   // this.props.dispatch(UserActions.login(values.email, values.password));
-  }
-  render() {
+  
+  render() { 
+    const { handleSubmit } = this.props
     return (
       <div>
         <h2>React Redux Sample Dynamic Form</h2>
-        {fields.map(field => (
-          <div key={field.name}>
-            <Field
-              name={field.name}
-              component={renderField}
-              field={field}
-            />
-          </div>
-        ))}
+        <form onSubmit={handleSubmit(submit)}>
+          {fields.map(field => (
+            <div key={field.name}>
+              <Field
+                name={field.name}
+                component={renderField}
+                field={field}
+              />
+            </div>
+          ))}
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     )
   }
 }
