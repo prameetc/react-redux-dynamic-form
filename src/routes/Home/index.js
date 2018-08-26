@@ -14,6 +14,7 @@ const fields = [
   {
     name: 'Favourite Colors',
     type: 'select',
+    multiple: false,
     options: [
       { label: 'Red', value: 'red' },
       { label: 'Yellow', value: 'yellow' },
@@ -40,7 +41,7 @@ const email = value =>
 // Component to render the field
     
 const renderField = ({ input, field, meta: { touched, error, warning } }) => {
-  const { type, placeholder, value, name, conditional } = field
+  const { type, placeholder, value, name, multiple } = field
   if (type === 'text' || type === 'email' || type === 'number') {
     return (
       <div>
@@ -59,7 +60,7 @@ const renderField = ({ input, field, meta: { touched, error, warning } }) => {
     const handleBlur = e => e.preventDefault();
     return (
       <div style={{ display: 'block', width: '40%' }} className="text-center">
-        <Select {...input} options={options} onBlur={this.handleblur} onChange={input.onChange} isSerchable={options.length > 2 ? true : false} />
+        <Select {...input} options={options} onBlur={this.handleblur} onChange={input.onChange} isMulti={multiple} isSerchable={options.length > 2 ? true : false} />
       </div>
     )
   }
@@ -104,7 +105,7 @@ class Home extends Component {
                   name={field.name}
                   component={renderField}
                   field={field}
-                 // validate={[required, email]}
+                  validate={field.type === "text" ? [required] : (field.type === "email" ? [required, email] : [required, number])}
                 />
               </div>
             </div>
