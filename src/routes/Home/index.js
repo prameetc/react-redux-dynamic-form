@@ -2,27 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Field, reduxForm, formValueSelector, getFormValues } from 'redux-form'
 import { connect } from 'react-redux';
-// import { getFormValues } from 'redux-form/immutable'
 import Select from 'react-select';
-
-// This is a sample data set. 
-const fields = [
-  { name: 'Name', type: 'text', placeholder: 'Enter Name'},
-  { name: 'Age', type: 'number', placeholder: 'Enter age' },
-  { name: 'Email', type: 'email', placeholder: 'Enter Email'},
-  { name: 'Employed', type: 'checkbox' },
-  {
-    name: 'Favourite Colors',
-    type: 'select',
-    multiple: false,
-    options: [
-      { label: 'Red', value: 'red' },
-      { label: 'Yellow', value: 'yellow' },
-      { label: 'Green', value: 'green' },
-    ],
-  },
-  { name: 'Gender', type: 'radio', value: 'Male' },
-]
+import { fields } from './data';
+import { formSubmit } from '../../redux/SampleForm/action';
 
 // Regex check
 const required = value => value ? undefined : 'Required'
@@ -39,7 +21,7 @@ const email = value =>
     'Invalid email address' : undefined
 
 // Component to render the field
-    
+
 const renderField = ({ input, field, meta: { touched, error, warning } }) => {
   const { type, placeholder, value, name, multiple } = field
   if (type === 'text' || type === 'email' || type === 'number') {
@@ -77,38 +59,32 @@ const renderField = ({ input, field, meta: { touched, error, warning } }) => {
   }
 }
 
-function submit(values) {
-  console.log('here', values);
-}
-
-
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isChecked: false
-    };
+  
+  submit(values) {
+    formSubmit(values);
   }
-  render() { 
+
+  render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
-    
+
     return (
       <div className="container">
         <div className="form-group w-50">
           <h2>React Redux Sample Dynamic Form</h2>
-          <form onSubmit={handleSubmit(submit)}>
+          <form onSubmit={handleSubmit(this.submit)}>
             {fields.map(field => (
-            <div key={field.name}>
-              <label className="font-weight-bold pt-3">{field.name}</label>
-              <div>
-                <Field
-                  name={field.name}
-                  component={renderField}
-                  field={field}
-                  validate={field.type === "text" ? [required] : (field.type === "email" ? [required, email] : [required, number])}
-                />
+              <div key={field.name}>
+                <label className="font-weight-bold pt-3">{field.name}</label>
+                <div>
+                  <Field
+                    name={field.name}
+                    component={renderField}
+                    field={field}
+                   // validate={field.type === "text" ? [required] : (field.type === "email" ? [required, email] : [required, number])}
+                  />
+                </div>
               </div>
-            </div>
             ))}
             <button className="btn btn-secondary" type="submit">Submit</button>
           </form>
@@ -119,7 +95,7 @@ class Home extends Component {
 }
 
 const HomeScreen = reduxForm({
-  form: "sampleform", 
+  form: "sampleform",
   destroyOnUnmount: false
 })(Home);
 
@@ -129,5 +105,10 @@ const mapStateToProps = state => {
     formState: state.form.sampleform,
   }
 }
+function bindActions(dispatch) {
+  return {
+    formSubmit: () => dispatch(formSubmit()),
+  };
+}
 
-export default connect(mapStateToProps)(HomeScreen);
+export default withRouter(connect(mapStateToProps, bindActions)(HomeScreen));
