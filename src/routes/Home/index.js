@@ -8,7 +8,7 @@ class Home extends Component {
       <div className="container">
         <div className="form-group w-50">
           <h2>React Redux Sample Dynamic Form</h2>
-          <Form fields={fields}/>
+          <Form fields={fields}/> 
         </div>
       </div>
     )

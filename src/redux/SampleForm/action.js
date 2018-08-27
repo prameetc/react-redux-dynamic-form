@@ -1,19 +1,24 @@
 import {FORM_SUBMIT_SUCCESS, FORM_SUBMIT_FAILED} from './actionType';
 import axios from 'axios';
 
+// The first two actions can be used to store the values in redux state after successful API call. Beyond the scope of the task.
+
+// Success Action
 export const formSubmitSuccess = data => {
   return {
-    type: FORM_SUBMIT_SUCCESS,
+    type: FORM_SUBMIT_SUCCESS, // Calls Success Reducer.
     data
   };
 };
 
+// Failure Action
 export const formSubmitFailed = data => {
   return {
-    type: FORM_SUBMIT_FAILED,
+    type: FORM_SUBMIT_FAILED, // Calls Failure Reducer.
     data
   };
 };
+
 
 export const getFormValues = () => {
   try {
@@ -22,7 +27,7 @@ export const getFormValues = () => {
 
     // Sample API GET request using axios. Can be replaced with actual GET call.
     axios
-      .get('https://jsonplaceholder.typicode.com/posts') // Sample URL
+      .get('https://jsonplaceholder.typicode.com/posts') // Dummy URL
       .then(function (response) {
         console.log('GET Response', response);
       })
@@ -37,12 +42,15 @@ export const getFormValues = () => {
 
 export const formSubmit = values => {
   try {
+
    // Sample POST request of our form values to a dummy API using axios.
     
+   // I prefer debounce/throttle in the form component itself, rather than using it in the axios call. That is why I chose the former. 
+    
     axios
-      .post('https://jsonplaceholder.typicode.com/posts', values)
+      .post('https://jsonplaceholder.typicode.com/posts', values) // Dummy URL
       .then(response => {
-        console.log('POST response', response);
+        console.log('POST response', response); 
       })
       .catch(error => {
         console.log(error);

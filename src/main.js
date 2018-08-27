@@ -9,7 +9,7 @@ import Routes from "./routes";
 
 import App from "./components/App";
 
-let store = configureStore();
+let store = configureStore(); // Our redux store configuration.
 
 ReactDOM.render(
   <Provider store={store}>

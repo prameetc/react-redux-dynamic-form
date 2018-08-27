@@ -7,9 +7,10 @@ const initialState = {
   formData: {},
 };
 
+// Sample Reducers. Beyond the scope of the task. Can be used to store submitted values in the state.
 export const sampleform = (state = initialState, action) => {
   switch (action.type) {
-    case FORM_SUBMIT_SUCCESS:
+    case FORM_SUBMIT_SUCCESS: 
       return {
         ...state,
         formData: action.data,

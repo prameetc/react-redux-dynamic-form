@@ -1,4 +1,4 @@
-// Sample Data. Will be replaced with data coming from API.
+// Sample Data for our dynamic form. Will be replaced with data coming from API.
 
 export const fields = [
   { name: 'Name', type: 'text', placeholder: 'Enter Name' },

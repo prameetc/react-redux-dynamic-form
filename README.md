@@ -1,9 +1,5 @@
 # React Redux Dynamic Form
 
-## Requirements
-* node `^5.0.0`
-* yarn `^0.23.0` or npm `^3.0.0`
-
 ## Installation
 
 ```bash
@@ -11,7 +7,7 @@ $ git clone https://github.com/prameetc/react-redux-dynamic-form.git <my-project
 $ cd <my-project-name>
 ```
 
-When that's done, install the project dependencies. It is recommended that you use [Yarn](https://yarnpkg.com/) for deterministic dependency management, but `npm install` will suffice.
+When that's done, install the project dependencies. It is recommended that you use [Yarn](https://yarnpkg.com/) for deterministic dependency management, however `npm install` will also suffice.
 
 ```bash
 $ yarn  # Install project dependencies (or `npm install`)
@@ -36,3 +32,8 @@ While developing, you will probably rely mostly on `yarn start`; however, there 
 |`lint`             |[Lints](http://stackoverflow.com/questions/8503559/what-is-linting) the project for potential errors|
 |`lint:fix`         |Lints the project and [fixes all correctable errors](http://eslint.org/docs/user-guide/command-line-interface.html#fix)|
 
+## Additional Comments
+
+* Redux Form is used to render the dynamic form
+* Axios is used for the API calls 
+* Bootstrap 4 is used for styling
