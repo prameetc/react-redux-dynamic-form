@@ -5,6 +5,7 @@ export const fields = [
   { name: 'Age', type: 'number', placeholder: 'Enter age' },
   { name: 'Email', type: 'email', placeholder: 'Enter Email' },
   { name: 'Employed', type: 'checkbox' },
+  { name: 'Company', type: 'text', placeholder: 'Company Name', dependant: true },
   {
     name: 'Favourite Colors',
     type: 'select',
