@@ -1,8 +1,6 @@
 import {FORM_SUBMIT_SUCCESS, FORM_SUBMIT_FAILED} from './actionType';
 import axios from 'axios';
 
-// The first two actions can be used to store the values in redux state after successful API call. Beyond the scope of the task.
-
 // Success Action
 export const formSubmitSuccess = data => {
   return {
@@ -23,8 +21,6 @@ export const formSubmitFailed = data => {
 export const getFormValues = () => {
   try {
     
-    // This could be the GET request to get the form fields from API
-
     // Sample API GET request using axios. Can be replaced with actual GET call.
     axios
       .get('https://jsonplaceholder.typicode.com/posts') // Dummy URL
